@@ -19,11 +19,11 @@ int main() {
     list[4].nData = 500;
 
     // 연결 리스트 구조화
-    list[0].next = &list[4];
+    list[0].next = &list[1];
     list[1].next = &list[2];
     list[2].next = &list[3];
-    list[3].next = &list[0];
-    list[4].next = &list[1];
+    list[3].next = &list[4];
+    list[4].next = 0;
 
     for (int i = 0; i < 5; ++i) {
         printf("list[%d]: %d\n", i, list[i].nData);
