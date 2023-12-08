@@ -14,10 +14,12 @@ NODE *g_pHead = NULL;
 
 /*연결 리스트 전체 데이터 출력*/
 void PrintList(void) {
-    while (g_pHead != NULL) {
-        printf("[%p] %s, next[%p]\n", g_pHead, g_pHead->szData, g_pHead->next);
-        g_pHead = g_pHead->next;
+    NODE *pHead = g_pHead;
+    while (pHead != NULL) {
+        printf("[%p] %s, next[%p]\n", pHead, pHead->szData, pHead->next);
+        pHead = pHead->next;
     }
+    putchar('\n');
 }
 
 int InsertNewNode(char *pszData) {
