@@ -36,7 +36,19 @@ int InsertNewNode(char *pszData) {
     return 1;
 }
 
+void ReleaseList(void) {
+    NODE *pTmp = g_pHead;
+    while (pTmp != NULL) {
+        NODE *pDelete = pTmp;
+        pTmp = pTmp->next;
+
+        printf("Delete: [%p] %s\n", pDelete, pDelete->szData);
+        free(pDelete);
+    }
+}
+
 int main() {
+    // List 테스를 위한 코드
     InsertNewNode("TEST01");
     PrintList();
 
@@ -46,5 +58,6 @@ int main() {
     InsertNewNode("TEST03");
     PrintList();
 
+    ReleaseList();
     return 0;
 }
