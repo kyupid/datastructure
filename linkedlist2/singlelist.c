@@ -47,10 +47,32 @@ void ReleaseList(void) {
     }
 }
 
+int FindData(char *pszData) {
+    NODE *pTmp = g_pHead;
+    while (pTmp != NULL) {
+        if (strcmp(pTmp->szData, pszData) == 0) {
+            return 1;
+        }
+        pTmp = pTmp->next;
+    }
+    return 0;
+}
+
 int main() {
     // List 테스를 위한 코드
     InsertNewNode("TEST01");
     PrintList();
+
+    // START - strcmp 함수 테스트
+    NODE *temp2 = (NODE *) malloc(sizeof(NODE)); // Create the temp2 node
+    strcpy(temp2->szData, "hello"); // Insert the data into temp2
+    int test = strcmp(temp2->szData, g_pHead->szData);
+    if (test == 0) {
+        printf("일치\n");
+    } else {
+        printf("불일치 %d\n", test);
+    }
+    // END - strcmp 함수테스트
 
     InsertNewNode("TEST02");
     PrintList();
@@ -58,6 +80,16 @@ int main() {
     InsertNewNode("TEST03");
     PrintList();
 
+    if (FindData("TEST01") == 1) {
+        printf("FindData(): TEST01 found \n");
+    }
+    if (FindData("TEST02") == 1) {
+        printf("FindData(): TEST02 found \n");
+    }
+    if (FindData("TEST03") == 1) {
+        printf("FindData(): TEST03 found \n");
+    }
     ReleaseList();
+    free(temp2); // Make sure to free the dynamically allocated node
     return 0;
 }
