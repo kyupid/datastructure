@@ -68,6 +68,8 @@ void ReleaseList(void) {
         printf("Delete: [%p] %s\n", pDelete, pDelete->szData);
         free(pDelete);
     }
+
+    g_head.next = 0;
 }
 
 NODE *FindData(char *pszData) {
