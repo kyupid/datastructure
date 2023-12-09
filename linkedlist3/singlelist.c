@@ -70,12 +70,12 @@ void ReleaseList(void) {
     }
 }
 
-int FindData(char *pszData) {
+NODE *FindData(char *pszData) {
     NODE *pCurr = g_head.next;
     NODE *pPrev = &g_head;
     while (pCurr != NULL) {
         if (strcmp(pCurr->szData, pszData) == 0) {
-            return 1;
+            return pPrev;
         }
         pCurr = pCurr->next;
         pPrev = pPrev->next;
@@ -84,24 +84,20 @@ int FindData(char *pszData) {
 }
 
 int DeleteDate(char *pszData) {
-    NODE *pCurr = g_head.next;
-    NODE *pPrev = &g_head;
-    while (pCurr != NULL) {
-        if (strcmp(pCurr->szData, pszData) == 0) {
-            //삭제
-            printf("DeleteData() %s\n", pCurr->szData);
-            pPrev->next = pCurr->next;
-            free(pCurr);
-            return 1;
-        }
-        pCurr = pCurr->next;
-        pPrev = pPrev->next;
+    NODE *pPrev = FindData(pszData);
+    while (pPrev != 0) {
+        NODE *pDelete = pPrev->next;
+        pPrev->next = pDelete->next;
+
+        printf("DeleteData() %s\n", pDelete->szData);
+        free(pDelete);
+        return 1;
     }
     return 0;
 }
 
 int main() {
- // List 테스트를 위한 코드
+    // List 테스트를 위한 코드
     puts("*** InsertAtHead() ***");
     InsertAtHead("TEST01");
     InsertAtHead("TEST02");
