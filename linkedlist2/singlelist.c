@@ -42,7 +42,7 @@ void ReleaseList(void) {
         NODE *pDelete = pTmp;
         pTmp = pTmp->next;
 
-        printf("Delete: [%p] %s\n", pDelete, pDelete->szData);
+        printf("ReleaseList(): [%p] %s\n", pDelete, pDelete->szData);
         free(pDelete);
     }
 }
@@ -53,6 +53,22 @@ int FindData(char *pszData) {
         if (strcmp(pTmp->szData, pszData) == 0) {
             return 1;
         }
+        pTmp = pTmp->next;
+    }
+    return 0;
+}
+
+int DeleteData(char *pszData) {
+    NODE *pTmp = g_pHead;
+    NODE *pPrev = NULL;
+    while (pTmp != NULL) {
+        if (strcmp(pTmp->szData, pszData) == 0) {
+            //삭제 - 그냥 삭제하면 끊어지니까 prev가 필요함
+            printf("DeleteData(): %s\n", pTmp->szData);
+            pPrev->next = pTmp->next; // 1,2,3 node에서 2node를 삭제한다면 1->3으로 연결해줘야하니까.
+            return 1;
+        }
+        pPrev = pTmp;
         pTmp = pTmp->next;
     }
     return 0;
@@ -89,6 +105,10 @@ int main() {
     if (FindData("TEST03") == 1) {
         printf("FindData(): TEST03 found \n");
     }
+
+    DeleteData("TEST03");
+
+
     ReleaseList();
     free(temp2); // Make sure to free the dynamically allocated node
     return 0;
