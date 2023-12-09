@@ -65,7 +65,13 @@ int DeleteData(char *pszData) {
         if (strcmp(pTmp->szData, pszData) == 0) {
             //삭제 - 그냥 삭제하면 끊어지니까 prev가 필요함
             printf("DeleteData(): %s\n", pTmp->szData);
-            pPrev->next = pTmp->next; // 1,2,3 node에서 2node를 삭제한다면 1->3으로 연결해줘야하니까.
+            if (pPrev != NULL) {
+                pPrev->next = pTmp->next; // 1,2,3 node에서 2node를 삭제한다면 1->3으로 연결해줘야하니까.
+            } else {
+                //삭제할 데이터가 첫번째
+                g_pHead = pTmp->next;
+            }
+            free(pTmp);
             return 1;
         }
         pPrev = pTmp;
