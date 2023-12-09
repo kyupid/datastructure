@@ -99,30 +99,23 @@ int DeleteDate(char *pszData) {
     return 0;
 }
 
-void Enqueue(char *pszData) {
-    InsertAtHead(pszData);
-}
-
-int Dequeue(NODE *dequeNode) {
+int PopData(NODE *pPopNode) {
+    NODE *sp = g_head.next;
     if (IsEmpty()) {
         return 0;
     }
-    //마지막 노드를 찾는다
-    NODE *pPrev = &g_head;
-    NODE *pCurr = g_head.next;
-    while (pCurr->next != 0) {
-        pPrev = pCurr;
-        pCurr = pCurr->next;
-    }
-    printf("pPrev: %s, pCurr: %s\n", pPrev->szData, pCurr->szData);
-
-    g_head.next = pPrev;
-    memcpy(dequeNode, pCurr, sizeof(NODE));
-    printf("Dequeue(): %s\n", pCurr->szData);
-    free(pCurr);
-    pPrev->next = 0;
-
+    memcpy(pPopNode, sp, sizeof(NODE));
+    g_head.next = sp->next;
+    free(sp);
     return 1;
+}
+
+int Enqueue(char *pszData) {
+    return InsertAtTail(pszData);
+}
+
+int Dequeue(NODE *dequeNode) {
+    return PopData(dequeNode);
 }
 
 int main() {
@@ -133,7 +126,6 @@ int main() {
 
     NODE node = {0};
     Dequeue(&node);
-
     PrintList();
 
     ReleaseList();
