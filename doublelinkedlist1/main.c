@@ -141,6 +141,13 @@ int InsertAt(int idx) {
 }
 
 NODE *GetAt(int idx) {
+    NODE *pTmp = g_pHead->next;
+    for (int i = 0; i <= idx; i++) {
+        if (i == idx) {
+            return pTmp;
+        }
+        pTmp = pTmp->next;
+    }
     return NULL;
 }
 
@@ -149,9 +156,9 @@ int main(void) {
     InsertAtHead("TEST01");
     InsertAtHead("TEST02");
     InsertAtHead("TEST03");
-    InsertAtTail("TEST04");
-    InsertAtTail("TEST05");
-    InsertAtTail("TEST06");
+
+    printf("GetAt(): [%p]\n", GetAt(0));
+//    GetAt(0);
 
 //    PrintList();
 //
@@ -161,8 +168,6 @@ int main(void) {
 //    FindNode("TEST04");
 //
     DeleteNode("TEST02");
-    DeleteNode("TEST04");
-    DeleteNode("TEST06");
 //
 //    InsertAtHead("TEST07");
 //    InsertAtHead("TEST08");
