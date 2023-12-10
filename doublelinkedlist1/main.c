@@ -121,7 +121,7 @@ int DeleteNode(const char *pszData) {
         pTmp = pTmp->next;
     }
     free(pNode);
-    return 0;
+    return g_nSize--;
 }
 
 int GetSize(void) {
@@ -166,7 +166,7 @@ int InsertAt(int idx, char *pszData) {
         pNewNode->index = pGetNode->index;
 
         pGetNode->prev = pNewNode;
-        pGetNode->prev->next = pNewNode;
+        pNewNode->prev->next = pNewNode;
 
         NODE *pTmp = pGetNode;
         while (pTmp != g_pTail) {
@@ -187,7 +187,7 @@ int main(void) {
     printf("GetAt(): [%p]\n", GetAt(0));
     printf("%d\n", g_nSize);
     int i = InsertAt(1, "TEST1111111111111");
-    printf("%d\n", i);
+    printf("%d\n", g_nSize);
 //    GetAt(0);
 
 //    PrintList();
