@@ -20,7 +20,13 @@ int g_nSize;
 void InitList(void) {
     g_pHead = (NODE *) malloc(sizeof(NODE));
     g_pTail = (NODE *) malloc(sizeof(NODE));
+
     g_nSize = 0;
+    memset(g_pHead, 0, sizeof(NODE));
+    memset(g_pTail, 0, sizeof(NODE));
+
+    g_pHead->next = g_pTail;
+    g_pTail->prev = g_pHead;
 }
 
 void ReleaseList(void) {
@@ -56,6 +62,9 @@ int GetLength(void) {
     return GetSize();
 }
 
+int IsEmpty(void) {
+    return GetSize();
+}
 
 int main(void) {
     return 0;
