@@ -7,6 +7,7 @@
 
 typedef struct NODE {
     char szData[64];
+    int index;
 
     struct NODE *prev;
     struct NODE *next;
@@ -52,7 +53,8 @@ void PrintList(void) {
     printf("PrintList(): g_nSize: %d, g_phead [%p], g_Tail[%p]\n", g_nSize, g_pHead, g_pTail);
     NODE *pTmp = g_pHead;
     while (pTmp != NULL) {
-        printf("[%p] %p, %s [%p]\n", pTmp->prev, pTmp, pTmp->szData, pTmp->next);
+        printf("[prev: %p] index: %d, addr: %p, data: %s [next: %p]\n", pTmp->prev, pTmp->index, pTmp, pTmp->szData,
+               pTmp->next);
         pTmp = pTmp->next;
     }
 }
@@ -64,11 +66,17 @@ int InsertAtHead(const char *pszData) {
 
     pNewNode->next = g_pHead->next;
     pNewNode->prev = g_pHead;
+    pNewNode->index = 0;
 
     g_pHead->next = pNewNode;
     pNewNode->next->prev = pNewNode;
 
-    g_nSize++;
+    NODE *pTmp = pNewNode->next;
+    while (pTmp != g_pTail) {
+        pTmp->index++;
+        pTmp = pTmp->next;
+    }
+
     return g_nSize++;
 }
 
@@ -79,18 +87,18 @@ int InsertAtTail(const char *pszData) {
 
     pNewNode->next = g_pTail;
     pNewNode->prev = g_pTail->prev;
+    pNewNode->index = g_nSize;
 
     g_pTail->prev = pNewNode;
     pNewNode->prev->next = pNewNode;
 
-    g_nSize++;
     return g_nSize++;
 }
 
 NODE *FindNode(const char *pszData) {
     NODE *pTmp = g_pHead->next;
-    while(pTmp != g_pTail) {
-        if(strcmp(pTmp->szData, pszData) == 0) {
+    while (pTmp != g_pTail) {
+        if (strcmp(pTmp->szData, pszData) == 0) {
             printf("FindNode(): [%p] %s\n", pTmp, pTmp->szData);
             return pTmp;
         }
@@ -123,29 +131,37 @@ int IsEmpty(void) {
     return GetSize();
 }
 
+int InsertAt(int idx) {
+    return 0;
+}
+
+NODE *GetAt(int idx) {
+    return NULL;
+}
+
 int main(void) {
     InitList();
-//    InsertAtHead("TEST01");
-//    InsertAtHead("TEST02");
-//    InsertAtHead("TEST03");
-    InsertAtTail("TEST01");
-    InsertAtTail("TEST02");
-    InsertAtTail("TEST03");
-
-    PrintList();
-
-    FindNode("TEST01");
-    FindNode("TEST02");
-    FindNode("TEST03");
-    FindNode("TEST04");
-
-    DeleteNode("TEST01");
-    DeleteNode("TEST02");
-    DeleteNode("TEST03");
-
-    InsertAtHead("TEST04");
-    InsertAtHead("TEST05");
-    InsertAtHead("TEST06");
+    InsertAtHead("TEST01");
+    InsertAtHead("TEST02");
+    InsertAtHead("TEST03");
+    InsertAtTail("TEST04");
+    InsertAtTail("TEST05");
+    InsertAtTail("TEST06");
+//
+//    PrintList();
+//
+//    FindNode("TEST01");
+//    FindNode("TEST02");
+//    FindNode("TEST03");
+//    FindNode("TEST04");
+//
+//    DeleteNode("TEST01");
+//    DeleteNode("TEST02");
+//    DeleteNode("TEST03");
+//
+//    InsertAtHead("TEST07");
+//    InsertAtHead("TEST08");
+//    InsertAtHead("TEST09");
 
     PrintList();
     ReleaseList();
