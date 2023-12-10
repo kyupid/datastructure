@@ -115,6 +115,11 @@ int DeleteNode(const char *pszData) {
     pNode->next->prev = pNode->prev;
 
     printf("DeleteNode(): [%p] %s\n", pNode, pNode->szData);
+    NODE *pTmp = pNode;
+    while (pTmp != g_pTail) {
+        pTmp->index--;
+        pTmp = pTmp->next;
+    }
     free(pNode);
     return 0;
 }
@@ -147,7 +152,7 @@ int main(void) {
     InsertAtTail("TEST04");
     InsertAtTail("TEST05");
     InsertAtTail("TEST06");
-//
+
 //    PrintList();
 //
 //    FindNode("TEST01");
@@ -155,9 +160,9 @@ int main(void) {
 //    FindNode("TEST03");
 //    FindNode("TEST04");
 //
-//    DeleteNode("TEST01");
-//    DeleteNode("TEST02");
-//    DeleteNode("TEST03");
+    DeleteNode("TEST02");
+    DeleteNode("TEST04");
+    DeleteNode("TEST06");
 //
 //    InsertAtHead("TEST07");
 //    InsertAtHead("TEST08");
