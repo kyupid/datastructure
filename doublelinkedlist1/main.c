@@ -6,7 +6,7 @@
 #include <malloc/_malloc.h>
 
 typedef struct NODE {
-    char *pszData;
+    char szData[64];
 
     struct NODE *prev;
     struct NODE *next;
@@ -25,20 +25,51 @@ void InitList(void) {
     memset(g_pHead, 0, sizeof(NODE));
     memset(g_pTail, 0, sizeof(NODE));
 
+    strcpy(g_pHead->szData, "DUMMY HEAD");
+    strcpy(g_pTail->szData, "DUMMY TAIL");
+
     g_pHead->next = g_pTail;
     g_pTail->prev = g_pHead;
 }
 
 void ReleaseList(void) {
+    NODE* pTmp = g_pHead;
+    while (pTmp != NULL) {
+        NODE *pDelete = pTmp;
+        pTmp = pTmp->next;
 
+        printf("free(%p)\n", pDelete);
+        free(pDelete);
+    }
+    g_pHead = NULL;
+    g_pTail = NULL;
+    g_nSize = 0;
+
+    puts("ReleaseList()");
 }
 
 void PrintList(void) {
-
+    printf("PrintList(): g_nSize: %d, g_phead [%p], g_Tail[%p]\n", g_nSize, g_pHead, g_pTail);
+    NODE *pTmp = g_pHead;
+    while (pTmp != NULL) {
+        printf("[%p] %s [%p]\n", pTmp->prev, pTmp->szData, pTmp->next);
+        pTmp = pTmp->next;
+    }
 }
 
 int InsertAtHead(const char *pszData) {
-    return 0;
+    NODE *pNewNode = malloc(sizeof(NODE));
+    memset(pNewNode, 0, sizeof(NODE));
+    strcpy(pNewNode->szData, pszData);
+
+    pNewNode->next = g_pHead->next;
+    pNewNode->prev = g_pHead;
+
+    g_pHead->next = pNewNode;
+    pNewNode->next->prev = pNewNode;
+
+    g_nSize++;
+    return g_nSize++;
 }
 
 int InsertAtTail(const char *pszData) {
@@ -67,5 +98,13 @@ int IsEmpty(void) {
 }
 
 int main(void) {
+    InitList();
+    InsertAtHead("TEST01");
+    InsertAtHead("TEST02");
+    InsertAtHead("TEST03");
+
+    PrintList();
+
+    ReleaseList();
     return 0;
 }
