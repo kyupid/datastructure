@@ -33,7 +33,7 @@ void InitList(void) {
 }
 
 void ReleaseList(void) {
-    NODE* pTmp = g_pHead;
+    NODE *pTmp = g_pHead;
     while (pTmp != NULL) {
         NODE *pDelete = pTmp;
         pTmp = pTmp->next;
@@ -52,7 +52,7 @@ void PrintList(void) {
     printf("PrintList(): g_nSize: %d, g_phead [%p], g_Tail[%p]\n", g_nSize, g_pHead, g_pTail);
     NODE *pTmp = g_pHead;
     while (pTmp != NULL) {
-        printf("[%p] %s [%p]\n", pTmp->prev, pTmp->szData, pTmp->next);
+        printf("[%p] %p, %s [%p]\n", pTmp->prev, pTmp, pTmp->szData, pTmp->next);
         pTmp = pTmp->next;
     }
 }
@@ -73,7 +73,18 @@ int InsertAtHead(const char *pszData) {
 }
 
 int InsertAtTail(const char *pszData) {
-    return 0;
+    NODE *pNewNode = malloc(sizeof(NODE));
+    memset(pNewNode, 0, sizeof(NODE));
+    strcpy(pNewNode->szData, pszData);
+
+    pNewNode->next = g_pTail;
+    pNewNode->prev = g_pTail->prev;
+
+    g_pTail->prev = pNewNode;
+    pNewNode->prev->next = pNewNode;
+
+    g_nSize++;
+    return g_nSize++;
 }
 
 NODE *FindNode(const char *pszData) {
@@ -99,9 +110,12 @@ int IsEmpty(void) {
 
 int main(void) {
     InitList();
-    InsertAtHead("TEST01");
-    InsertAtHead("TEST02");
-    InsertAtHead("TEST03");
+//    InsertAtHead("TEST01");
+//    InsertAtHead("TEST02");
+//    InsertAtHead("TEST03");
+    InsertAtTail("TEST01");
+    InsertAtTail("TEST02");
+    InsertAtTail("TEST03");
 
     PrintList();
 
