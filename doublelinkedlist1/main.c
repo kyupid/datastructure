@@ -31,27 +31,28 @@ void PrintList(void) {
 
 }
 
-void InsertAtHead(void) {
-
+int InsertAtHead(const char *pszData) {
+    return 0;
 }
 
-void InsertAtTail(void) {
-
+int InsertAtTail(const char *pszData) {
+    return 0;
 }
 
-void FindNode(void) {
-
+NODE *FindNode(const char *pszData) {
+    return NULL;
 }
 
-void DeleteNode(void) {
-
+int DeleteNode(const char *pszData) {
+    NODE *pNode = FindNode(pszData);
+    return 0;
 }
 
-void GetSize(void) {
-
+int GetSize(void) {
+    return g_nSize;
 }
 
-void GetLength(void) {
+int GetLength(void) {
     return GetSize();
 }
 
