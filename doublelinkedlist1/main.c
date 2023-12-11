@@ -6,12 +6,19 @@
 #include <malloc/_malloc.h>
 
 typedef struct NODE {
-    char szData[64];
-    int index;
 
+    // 관리 대상 자료
+    void* pData;
+
+    // 자료구조
     struct NODE *prev;
     struct NODE *next;
 } NODE;
+
+typedef struct USERDATA {
+    char szName[64];
+    char szPhone[64];
+} USERDATA;
 
 NODE *g_pHead;
 NODE *g_pTail;
