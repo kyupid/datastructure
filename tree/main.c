@@ -83,8 +83,16 @@ NODE *FindNode(const char *pszData) {
     return NULL;
 }
 
-int DeleteNode(const char *pszData) {
-    return 0;
+int DeleteNode(NODE *root, const char *pszData) {
+    if (root->szData < pszData) {
+        DeleteNode(root->left, pszData);
+    }
+    if (root->szData > pszData) {
+        DeleteNode(root->right, pszData);
+    }
+    if (root->szData == pszData) {
+        // 삭제할 노드를 찾았으니까 이후 구현
+    }
 }
 
 int GetSize(void) {
