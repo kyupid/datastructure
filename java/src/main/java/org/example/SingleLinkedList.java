@@ -12,15 +12,14 @@ public class SingleLinkedList<T> {
             size++;
             return;
         }
+        if (head.next != null) {
+            Node<T> temp2 = new Node<>();
+            temp2 = head.next;
 
-        Node<T> temp = head.next;
-        while (temp != null) {
-
-        }
-
-        if (head.next == null) {
-            head.next.data = data;
-            return;
+            Node<T> temp = new Node<>();
+            temp.data = data;
+            head.next = temp;
+            head.next.next = temp2;
         }
 
 
@@ -48,6 +47,7 @@ public class SingleLinkedList<T> {
 
     private static class Node<T> {
         T data;
-        Node next;
+        Node<T> next;
+
     }
 }
