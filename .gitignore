@@ -1,5 +1,5 @@
 cmake-build-debug
 .idea
-main
 singlelist
 singlelist.dSYM
+java/target
