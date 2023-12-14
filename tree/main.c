@@ -6,7 +6,7 @@
 #include <malloc/_malloc.h>
 
 typedef struct NODE {
-    char szData[64];
+    int data;
     int index;
 
     struct NODE *left;
@@ -24,7 +24,7 @@ void ReleaseTree(NODE *pParent) {
     ReleaseTree(pParent->left);
     ReleaseTree(pParent->right);
 
-    printf("free(): %p, %s\n", pParent, pParent->szData);
+    printf("free(): %p, %d\n", pParent, pParent->data);
     free(pParent);
     g_pRoot = NULL;
 }
@@ -35,15 +35,15 @@ void PrintTree(NODE *pParent) {
     }
     PrintTree(pParent->left);
 
-    printf("[%p] %p, %s [%p]\n", pParent->left, pParent, pParent->szData, pParent->right);
+    printf("[%p] %p, %d [%p]\n", pParent->left, pParent, pParent->data, pParent->right);
 
     PrintTree(pParent->right);
 }
 
-int InsertNode(const char *pszData) {
+int InsertNode(int data) {
     NODE *pNewNode = (NODE *) malloc(sizeof(NODE));
     memset(pNewNode, 0, sizeof(NODE));
-    strcpy(pNewNode->szData, pszData);
+    pNewNode->data = data;
 
     g_nSize++;
 
@@ -55,7 +55,7 @@ int InsertNode(const char *pszData) {
     NODE *pTmp = g_pRoot;
     while (pTmp != NULL) {
         //비교
-        if (strcmp(pTmp->szData, pNewNode->szData) > 0) {
+        if (pTmp->data > pNewNode->data) {
             //left
             if (pTmp->left == NULL) {
                 pTmp->left = pNewNode;
@@ -79,20 +79,49 @@ int InsertNode(const char *pszData) {
     return 1;
 }
 
-NODE *FindNode(const char *pszData) {
+NODE *FindNode(int data) {
     return NULL;
 }
 
-int DeleteNode(NODE *root, const char *pszData) {
-    if (root->szData < pszData) {
-        DeleteNode(root->left, pszData);
+NODE *FindMin(NODE *root) {
+    if (root->left != NULL) {
+        return FindMin(root->left);
     }
-    if (root->szData > pszData) {
-        DeleteNode(root->right, pszData);
+    return root;
+}
+
+NODE *DeleteNode(NODE *root, int data) {
+    if (root == NULL) {
+        return root;
     }
-    if (root->szData == pszData) {
-        // 삭제할 노드를 찾았으니까 이후 구현
+    if (root->data < data) {
+        root->right = DeleteNode(root->right, data);
+    } else if (root->data > data) {
+        root->left = DeleteNode(root->left, data);
+    } else if (root->data == data) {
+        // case 1: no child
+        if (root->left == NULL && root->right == NULL) {
+            free(root);
+            root = NULL;
+
+            // case2: one child
+        } else if (root->left == NULL) {
+            NODE *temp = root;
+            root = root->right;
+            free(temp);
+        } else if (root->right == NULL) {
+            NODE *temp = root;
+            root = root->left;
+            free(temp);
+
+            // case3: two children
+        } else if (root->left != NULL && root->right != NULL) {
+            NODE *temp = FindMin(root->right);
+            root->data = temp->data;
+            root->right = DeleteNode(root->right, temp->data);
+        }
     }
+    return root;
 }
 
 int GetSize(void) {
@@ -104,11 +133,14 @@ int IsEmpty(void) {
 }
 
 int main(void) {
-    InsertNode("5번 항목");
-    InsertNode("4번 항목");
-    InsertNode("7번 항목");
-    InsertNode("6번 항목");
-    InsertNode("8번 항목");
+    InsertNode(7);
+    InsertNode(5);
+    InsertNode(3);
+    InsertNode(6);
+    InsertNode(10);
+    InsertNode(8);
+    InsertNode(12);
+    InsertNode(13);
 
     PrintTree(g_pRoot);
 
