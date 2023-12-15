@@ -71,7 +71,20 @@ public class SingleLinkedList<T> {
     }
 
     public T find(int index) {
-        return null;
+        if (index > size - 1) throw new IndexOutOfBoundsException("illegal index");
+        if (index == 0) return head.data;
+        if (index > 0) {
+            Node<T> temp = head.next;
+            final int startIndex = 1;
+            for (int i = startIndex; i < size; i++) {
+                if (i == index) {
+                    return temp.data;
+                }
+                temp = temp.next;
+            }
+        }
+        // Expected to never reach this point
+        throw new IllegalStateException("The list is in an inconsistent state");
     }
 
     public void getIndex() {
