@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.Objects;
+
 public class SingleLinkedList<T> {
 
     private Node<T> head;
@@ -60,9 +62,32 @@ public class SingleLinkedList<T> {
         T data;
         Node<T> next;
 
+        public Node() {
+        }
+
+        // 찾은 data 새로운 객체로 리턴하기 위함. 리스트 불변성 유지
+        public Node(T data) {
+            this.data = data;
+        }
+
         @Override
         public String toString() {
             return "data: " + data;
+        }
+
+        // find 할때 data가지고 비교하기 위함
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Node<?> node = (Node<?>) o;
+            return Objects.equals(data, node.data);
+        }
+
+        // find 할때 data가지고 비교하기 위함
+        @Override
+        public int hashCode() {
+            return Objects.hash(data);
         }
     }
 }
