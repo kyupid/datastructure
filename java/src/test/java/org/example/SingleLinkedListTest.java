@@ -25,20 +25,6 @@ class SingleLinkedListTest {
     }
 
     @Test
-    @DisplayName("find(): 같은 객체를 찾을 수 있다.")
-    void find() {
-        SingleLinkedList<String> list = new SingleLinkedList<>();
-        list.insertAtHead("1");
-        list.insertAtHead("2");
-
-        String found = list.find("2");
-        assertThat(found).isEqualTo("2");
-
-        String found2 = list.find("3");
-        assertThat(found2).isNull();
-    }
-
-    @Test
     @DisplayName("insertAtTail(): list 꼬리에 element를 담을 수 있다.")
     void insertAtTail() {
         SingleLinkedList<String> list = new SingleLinkedList<>();
@@ -69,5 +55,20 @@ class SingleLinkedListTest {
         assertThat(list.find(3)).isEqualTo("4");
         assertThatThrownBy(() -> list.find(4))
                 .isInstanceOf(IndexOutOfBoundsException.class);
+    }
+
+    @Test
+    @DisplayName("getIndex(): list 에서 데이터로 인덱스를 찾을 수 있다.")
+    void getIndex() {
+        SingleLinkedList<String> list = new SingleLinkedList<>();
+        list.insertAtTail("1");
+        list.insertAtTail("2");
+        list.insertAtTail("3");
+        list.insertAtTail("4");
+
+        assertThat(list.getIndex("4")).isEqualTo(3);
+        assertThat(list.getIndex("3")).isEqualTo(2);
+        assertThat(list.getIndex("2")).isEqualTo(1);
+        assertThat(list.getIndex("1")).isEqualTo(0);
     }
 }

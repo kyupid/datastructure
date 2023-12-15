@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class SingleLinkedList<T> {
@@ -51,23 +52,19 @@ public class SingleLinkedList<T> {
         size++;
     }
 
-    public T find(T data) {
+    public int getIndex(T data) {
         if (head.data == data) {
-            return head.data;
+            return 0;
         }
         Node<T> temp = head.next;
-        if (temp.data == data) {
-            return temp.data;
-        }
-
-        // 싱글이라서 어쩔수없이 앞에서 다 찾아야함.
-        while (temp != null) {
+        final int startIndex = 1;
+        for (int i = startIndex; temp != null; i++) {
             if (temp.data == data) {
-                return temp.data;
+                return i;
             }
             temp = temp.next;
         }
-        return null;
+        return -1;
     }
 
     public T find(int index) {
@@ -85,10 +82,6 @@ public class SingleLinkedList<T> {
         }
         // Expected to never reach this point
         throw new IllegalStateException("The list is in an inconsistent state");
-    }
-
-    public void getIndex() {
-
     }
 
     public void delete() {
