@@ -77,14 +77,6 @@ public class SingleLinkedList<T> {
         T data;
         Node<T> next;
 
-        public Node() {
-        }
-
-        // 찾은 data 새로운 객체로 리턴하기 위함. 리스트 불변성 유지
-        public Node(T data) {
-            this.data = data;
-        }
-
         @Override
         public String toString() {
             return "data: " + data;
