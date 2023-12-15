@@ -37,7 +37,19 @@ public class SingleLinkedList<T> {
     }
 
     public void print() {
-
+        Node<T> temp = null;
+        for (int i = 0; i < size; i++) {
+            if (i == 0) {
+                temp = head;
+            }
+            if (i == 1) {
+                temp = head.next;
+            }
+            if (i > 1) {
+                temp = temp.next;
+            }
+            System.out.println(temp);
+        }
     }
 
     public int size() {
@@ -48,5 +60,9 @@ public class SingleLinkedList<T> {
         T data;
         Node<T> next;
 
+        @Override
+        public String toString() {
+            return "data: " + data;
+        }
     }
 }

@@ -12,5 +12,6 @@ class SingleLinkedListTest {
         list.insertAtHead("2");
         list.insertAtHead("3");
         list.insertAtHead("4");
+        list.print();
     }
 }
