@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class SingleLinkedListTest {
 
@@ -51,5 +52,22 @@ class SingleLinkedListTest {
         assertThat(list.find(1)).isEqualTo("2");
         assertThat(list.find(2)).isEqualTo("3");
         assertThat(list.find(3)).isEqualTo("4");
+    }
+
+    @Test
+    @DisplayName("find(index): list 에서 인덱스로 노드를 찾을 수 있다.")
+    void findByIndex() {
+        SingleLinkedList<String> list = new SingleLinkedList<>();
+        list.insertAtTail("1");
+        list.insertAtTail("2");
+        list.insertAtTail("3");
+        list.insertAtTail("4");
+
+        assertThat(list.find(0)).isEqualTo("1");
+        assertThat(list.find(1)).isEqualTo("2");
+        assertThat(list.find(2)).isEqualTo("3");
+        assertThat(list.find(3)).isEqualTo("4");
+        assertThatThrownBy(() -> list.find(4))
+                .isInstanceOf(IndexOutOfBoundsException.class);
     }
 }
