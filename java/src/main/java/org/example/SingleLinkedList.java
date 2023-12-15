@@ -6,23 +6,22 @@ public class SingleLinkedList<T> {
     private int size;
 
     public void insertAtHead(T data) {
-        if (head == null) {
+        // 첫번째로 넣는 노드
+        if (size == 0) {
             head = new Node<>();
             head.data = data;
-            size++;
-            return;
+        } else if (size == 1) {
+            Node<T> newNode = new Node<>();
+            newNode.data = data;
+            head.next = newNode;
+        } else if (size > 1) {
+            Node<T> nextNode = head.next;
+            Node<T> newNode = new Node<>();
+            newNode.data = data;
+            head.next = newNode;
+            head.next.next = nextNode;
         }
-        if (head.next != null) {
-            Node<T> temp2 = new Node<>();
-            temp2 = head.next;
-
-            Node<T> temp = new Node<>();
-            temp.data = data;
-            head.next = temp;
-            head.next.next = temp2;
-        }
-
-
+        size++;
     }
 
     public void insertAtTail() {
