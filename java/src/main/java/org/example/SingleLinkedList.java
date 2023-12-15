@@ -26,8 +26,29 @@ public class SingleLinkedList<T> {
         size++;
     }
 
-    public void insertAtTail() {
-
+    public void insertAtTail(T data) {
+        if (size == 0) {
+            head = new Node<>();
+            head.data = data;
+        } else if (size == 1) {
+            Node<T> newNode = new Node<>();
+            newNode.data = data;
+            head.next = newNode;
+        } else if (size > 1) {
+            Node<T> prev = head;
+            Node<T> temp = head.next;
+            while (temp != null) {
+                prev = temp;
+                temp = temp.next;
+            }
+            if (prev.next != null) {
+                throw new RuntimeException("prev.next must be null");
+            }
+            Node<T> newNode = new Node<>();
+            newNode.data = data;
+            prev.next = newNode;
+        }
+        size++;
     }
 
     public T find(T data) {
@@ -47,6 +68,14 @@ public class SingleLinkedList<T> {
             temp = temp.next;
         }
         return null;
+    }
+
+    public T find(int index) {
+        return null;
+    }
+
+    public void getIndex() {
+
     }
 
     public void delete() {
