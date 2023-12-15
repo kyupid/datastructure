@@ -1,6 +1,6 @@
 package org.example;
 
-import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class SingleLinkedList<T> {
@@ -84,23 +84,34 @@ public class SingleLinkedList<T> {
         throw new IllegalStateException("The list is in an inconsistent state");
     }
 
-    public void delete() {
-
+    public void delete(T data) {
+        if (size == 0) {
+            throw new NoSuchElementException("Cannot delete from an empty list");
+        }
+        // case1 element가 하나인 경우
+        if (head.data == data) {
+            head = head.next;
+            size--;
+            return;
+        }
+        Node<T> prev = head;
+        Node<T> temp = head.next;
+        while (temp != null) {
+            // case2 element의 맨뒤를 삭제하는 경우
+            // case3 가운데 element를 삭제하는 경우
+            if (temp.data == data) {
+                prev.next = temp.next;
+                size--;
+                return;
+            }
+            prev = temp;
+            temp = temp.next;
+        }
     }
 
     public void print() {
-        Node<T> temp = null;
         for (int i = 0; i < size; i++) {
-            if (i == 0) {
-                temp = head;
-            }
-            if (i == 1) {
-                temp = head.next;
-            }
-            if (i > 1) {
-                temp = temp.next;
-            }
-            System.out.println(temp);
+            System.out.println(find(i));
         }
     }
 
