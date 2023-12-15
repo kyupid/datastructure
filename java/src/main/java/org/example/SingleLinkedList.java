@@ -30,8 +30,23 @@ public class SingleLinkedList<T> {
 
     }
 
-    public void find() {
+    public T find(T data) {
+        if (head.data == data) {
+            return head.data;
+        }
+        Node<T> temp = head.next;
+        if (temp.data == data) {
+            return temp.data;
+        }
 
+        // 싱글이라서 어쩔수없이 앞에서 다 찾아야함.
+        while (temp != null) {
+            if (temp.data == data) {
+                return temp.data;
+            }
+            temp = temp.next;
+        }
+        return null;
     }
 
     public void delete() {
