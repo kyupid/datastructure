@@ -48,13 +48,13 @@ public class SingleLinkedList<T> {
     }
 
     public int getIndex(T data) {
-        if (head.data == data) {
+        if (head.data.equals(data)) {
             return 0;
         }
         Node<T> temp = head.next;
         final int startIndex = 1;
         for (int i = startIndex; temp != null; i++) {
-            if (temp.data == data) {
+            if (temp.data.equals(data)) {
                 return i;
             }
             temp = temp.next;
