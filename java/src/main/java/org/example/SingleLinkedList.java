@@ -1,5 +1,6 @@
 package org.example;
 
+import java.io.ByteArrayOutputStream;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
@@ -13,16 +14,13 @@ public class SingleLinkedList<T> {
         if (size == 0) {
             head = new Node<>();
             head.data = data;
-        } else if (size == 1) {
+        } else if (size > 0) {
             Node<T> newNode = new Node<>();
             newNode.data = data;
-            head.next = newNode;
-        } else if (size > 1) {
-            Node<T> nextNode = head.next;
-            Node<T> newNode = new Node<>();
-            newNode.data = data;
-            head.next = newNode;
-            head.next.next = nextNode;
+            newNode.next = head;
+            head = newNode;
+        } else {
+            throw new IllegalStateException("Invalid size: size should never be less than 0.");
         }
         size++;
     }

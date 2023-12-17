@@ -18,10 +18,10 @@ class SingleLinkedListTest {
         list.insertAtHead("4");
 
         assertThat(list.size()).isEqualTo(4);
-        assertThat(list.find(0)).isEqualTo("1");
-        assertThat(list.find(1)).isEqualTo("4");
-        assertThat(list.find(2)).isEqualTo("3");
-        assertThat(list.find(3)).isEqualTo("2");
+        assertThat(list.find(0)).isEqualTo("4");
+        assertThat(list.find(1)).isEqualTo("3");
+        assertThat(list.find(2)).isEqualTo("2");
+        assertThat(list.find(3)).isEqualTo("1");
     }
 
     @Test
