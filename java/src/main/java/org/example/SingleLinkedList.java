@@ -40,9 +40,6 @@ public class SingleLinkedList<T> {
                 prev = temp;
                 temp = temp.next;
             }
-            if (prev.next != null) {
-                throw new RuntimeException("prev.next must be null");
-            }
             Node<T> newNode = new Node<>();
             newNode.data = data;
             prev.next = newNode;

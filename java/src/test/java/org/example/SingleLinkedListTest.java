@@ -104,8 +104,6 @@ class SingleLinkedListTest {
         list3.insertAtTail("3");
         list3.delete("3");
 
-        list3.print();
-
         assertThat(list3.size()).isEqualTo(2);
         assertThat(list3.find(0)).isEqualTo("1");
         assertThat(list3.find(1)).isEqualTo("2");
